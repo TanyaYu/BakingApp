@@ -1,16 +1,16 @@
 package com.example.tanyayuferova.bakingapp.ui;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.databinding.ActivityRecipeBinding;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
+import com.example.tanyayuferova.bakingapp.entity.Step;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -29,8 +29,7 @@ public class RecipeActivity extends AppCompatActivity {
             binding.setRecipe((Recipe) getIntent().getParcelableExtra(RECIPE_ITEM_EXTRA));
         }
 
-        ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setTitle(binding.getRecipe().getName());
+        getSupportActionBar().setTitle(binding.getRecipe().getName());
 
         initIngredientsTable();
         initStepsTable();
@@ -57,5 +56,11 @@ public class RecipeActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void stepItemOnClick(Step step) {
+        Intent intent = new Intent(this, StepActivity.class);
+        intent.putExtra(StepActivity.STEP_ITEM_EXTRA, step);
+        startActivity(intent);
     }
 }

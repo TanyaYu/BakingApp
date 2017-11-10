@@ -35,6 +35,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsAdapter
 
         public void bind(Step item) {
             binding.setStep(item);
+            binding.setContext((RecipeActivity) itemView.getContext());
         }
     }
 

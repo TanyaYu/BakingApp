@@ -1,15 +1,11 @@
 package com.example.tanyayuferova.bakingapp.ui;
 
-import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.databinding.RecipeItemBinding;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -59,16 +55,5 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
     public void setData(List<Recipe> data) {
         this.data = data;
         notifyDataSetChanged();
-    }
-
-    @BindingAdapter("android:src")
-    public static void setImageUrl(ImageView view, String url) {
-        Picasso.with(view.getContext())
-                .load(url)
-                .error(R.drawable.ic_cupcake_color)
-                .into(view);
-        if(view.getDrawable() == null){
-            view.setImageResource(R.drawable.ic_cupcake_color);
-        }
     }
 }

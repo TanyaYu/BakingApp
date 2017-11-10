@@ -60,6 +60,14 @@ public class Step implements Parcelable, Comparable<Step> {
         this.shortDescription = shortDescription;
     }
 
+    public String getVisualResource() {
+        if(getVideoURL() != null && !getVideoURL().isEmpty())
+            return getVideoURL();
+        if(getThumbnailURL() != null && !getThumbnailURL().isEmpty())
+            return getThumbnailURL();
+        return null;
+    }
+
     public int describeContents() {
         return 0;
     }
