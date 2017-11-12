@@ -1,8 +1,11 @@
 package com.example.tanyayuferova.bakingapp.entity;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+
+import com.example.tanyayuferova.bakingapp.R;
 
 /**
  * Created by Tanya Yuferova on 11/9/2017.
@@ -58,6 +61,12 @@ public class Step implements Parcelable, Comparable<Step> {
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
+    }
+
+    public String getStepTitle(Context context) {
+        if(id == 0)
+            return getShortDescription();
+        return context.getString(R.string.step, id);
     }
 
     public String getVisualResource() {

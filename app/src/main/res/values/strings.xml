@@ -3,4 +3,7 @@
     <string name="load_error">Enable to load data</string>
     <string name="ingredients_caption">You need:</string>
     <string name="steps_caption">Instructions:</string>
+    <string name="step">Step: %1$d</string>
+    <string name="move_back">Previous</string>
+    <string name="move_next">Next</string>
 </resources>

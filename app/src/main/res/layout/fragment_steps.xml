@@ -1,0 +1,22 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.tanyayuferova.bakingapp.ui.StepsActivity$PlaceholderFragment">
+
+    <data>
+        <variable name="step" type="com.example.tanyayuferova.bakingapp.entity.Step" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_step_description"
+            android:text="@{step.description}"
+            tools:text="4. Beat together the nutella, mascarpone, 1 teaspoon of salt, and 1 tablespoon of vanilla on medium speed in a stand mixer or high speed with a hand mixer until fluffy."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </ScrollView>
+</layout>

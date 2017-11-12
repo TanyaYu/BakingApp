@@ -12,6 +12,8 @@ import com.example.tanyayuferova.bakingapp.databinding.ActivityRecipeBinding;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
 import com.example.tanyayuferova.bakingapp.entity.Step;
 
+import java.util.ArrayList;
+
 public class RecipeActivity extends AppCompatActivity {
 
     protected ActivityRecipeBinding binding;
@@ -59,8 +61,9 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     public void stepItemOnClick(Step step) {
-        Intent intent = new Intent(this, StepActivity.class);
-        intent.putExtra(StepActivity.STEP_ITEM_EXTRA, step);
+        Intent intent = new Intent(this, StepsActivity.class);
+        intent.putExtra(StepsActivity.STEP_START_INDEX_EXTRA, binding.getRecipe().getSteps().indexOf(step));
+        intent.putParcelableArrayListExtra(StepsActivity.STEPS_EXTRA, new ArrayList<>(binding.getRecipe().getSteps()));
         startActivity(intent);
     }
 }
