@@ -1,0 +1,5 @@
+<vector android:height="24dp" android:viewportHeight="15.774"
+    android:viewportWidth="15.774" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/colorAccent" android:pathData="M15.282,0.425c-0.922,-0.921 -3.04,-0.297 -4.731,1.395C9.048,3.323 8.987,5.586 8.907,6.199c-0.078,0.613 -2.632,2.166 -4.281,3.814c-2.83,2.83 -4.854,5.393 -4.523,5.725c0.332,0.332 2.896,-1.693 5.725,-4.523c1.68,-1.68 3.197,-4.03 3.858,-4.341s2.78,-0.295 4.201,-1.716C15.578,3.466 16.203,1.347 15.282,0.425z"/>
+</vector>
+    <!--Icon from www.flaticon.com is licensed by CC 3.0 BY-->

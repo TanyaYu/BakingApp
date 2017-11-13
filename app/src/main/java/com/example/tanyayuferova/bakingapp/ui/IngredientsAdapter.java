@@ -34,6 +34,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         public void bind(Ingredient item) {
             binding.setIngredient(item);
+            binding.setContext((RecipeActivity) itemView.getContext());
         }
     }
 

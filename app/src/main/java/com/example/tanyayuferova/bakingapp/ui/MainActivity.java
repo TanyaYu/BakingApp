@@ -2,13 +2,13 @@ package com.example.tanyayuferova.bakingapp.ui;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Point;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,7 +35,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     protected void initRecyclerView(){
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        int columns;
+        if(size.x < 1100)
+            columns = 1;
+        else if(size.x < 1800)
+            columns = 2;
+        else if(size.x < 2600)
+            columns = 3;
+        else columns = 4;
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, columns);
         binding.rvRecipes.setLayoutManager(layoutManager);
         binding.rvRecipes.setHasFixedSize(true);
         recipesAdapter = new RecipesAdapter();

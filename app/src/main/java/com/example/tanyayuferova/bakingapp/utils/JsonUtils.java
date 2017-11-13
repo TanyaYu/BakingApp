@@ -39,6 +39,9 @@ public class JsonUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Last Recipes should be on top
+        Collections.sort(result);
+        Collections.reverse(result);
         return result;
     }
 

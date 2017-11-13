@@ -9,22 +9,23 @@
 
     <LinearLayout
         android:orientation="horizontal"
+        android:padding="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> context.stepItemOnClick(step)}">
 
         <TextView
             android:id="@+id/tv_number"
-            android:text='@{step.id == 0 ? "" : step.id + "."}'
-            style="@style/StepNumber"
+            android:text='@{step.id == 0 ? "•" : step.id + "."}'
+            style="@style/StepNumberTextView"
             android:layout_height="wrap_content"
-            tools:text="1."/>
+            tools:text="10."/>
 
         <TextView
             android:id="@+id/tv_description"
+            style="@style/StepDescriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:text="@{step.shortDescription}"
             tools:text="Ingredient name" />
 

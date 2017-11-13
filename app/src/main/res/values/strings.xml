@@ -6,4 +6,11 @@
     <string name="step">Step: %1$d</string>
     <string name="move_back">Previous</string>
     <string name="move_next">Next</string>
+
+    <!-- Measure names -->
+    <string name="cup_measure">Cup</string>
+    <string name="tsp_measure">Teaspoon</string>
+    <string name="tblsp_measure">Tablespoon</string>
+    <string name="g_measure">Grams</string>
+    <string name="unit_measure">Unit</string>
 </resources>

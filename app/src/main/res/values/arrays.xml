@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="measure_types">
+        <item>G</item>
+        <item>TSP</item>
+        <item>TBLSP</item>
+        <item>UNIT</item>
+        <item>CUP</item>
+    </array>
+</resources>

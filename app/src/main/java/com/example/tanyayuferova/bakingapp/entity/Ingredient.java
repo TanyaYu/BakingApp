@@ -1,7 +1,11 @@
 package com.example.tanyayuferova.bakingapp.entity;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.example.tanyayuferova.bakingapp.R;
 
 /**
  * Created by Tanya Yuferova on 11/9/2017.
@@ -41,6 +45,37 @@ public class Ingredient implements Parcelable {
         this.name = name;
     }
 
+    public Drawable getMeasureDrawableResource(Context context) {
+        String[] measureTypes = context.getResources().getStringArray(R.array.measure_types);
+        if(measureTypes[0].equals(measure)) { //G
+            return context.getResources().getDrawable(R.drawable.ic_g);
+        } else if(measureTypes[1].equals(measure)) { //TSP
+            return context.getResources().getDrawable(R.drawable.ic_teaspoon);
+        } else if(measureTypes[2].equals(measure)) { //TBLSP
+            return context.getResources().getDrawable(R.drawable.ic_spoon);
+        } else if(measureTypes[3].equals(measure)) { //UNIT
+            return null;
+        } else if(measureTypes[4].equals(measure)) { //CUP
+            return context.getResources().getDrawable(R.drawable.ic_measure_cup);
+        }
+        return null;
+    }
+
+    public String getMeasureDescription(Context context) {
+        String[] measureTypes = context.getResources().getStringArray(R.array.measure_types);
+        if(measureTypes[0].equals(measure)) { //G
+            return context.getResources().getString(R.string.g_measure);
+        } else if(measureTypes[1].equals(measure)) { //TSP
+            return context.getResources().getString(R.string.tsp_measure);
+        } else if(measureTypes[2].equals(measure)) { //TBLSP
+            return context.getResources().getString(R.string.tblsp_measure);
+        } else if(measureTypes[3].equals(measure)) { //UNIT
+            return context.getResources().getString(R.string.unit_measure);
+        } else if(measureTypes[4].equals(measure)) { //CUP
+            return context.getResources().getString(R.string.cup_measure);
+        }
+        return null;
+    }
 
     public int describeContents() {
         return 0;
@@ -51,7 +86,6 @@ public class Ingredient implements Parcelable {
         strings[0] = measure;
         strings[1] = name;
         parcel.writeStringArray(strings);
-
         parcel.writeDouble(quantity);
     }
 

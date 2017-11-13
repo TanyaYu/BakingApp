@@ -2,6 +2,7 @@ package com.example.tanyayuferova.bakingapp.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by Tanya Yuferova on 11/9/2017.
  */
 
-public class Recipe implements Parcelable {
+public class Recipe implements Parcelable, Comparable<Recipe> {
 
     private int id;
     private String name;
@@ -125,5 +126,14 @@ public class Recipe implements Parcelable {
         if(obj instanceof Recipe)
             return this.getId() == ((Recipe) obj).getId();
         return super.equals(obj);
+    }
+
+    @Override
+    public int compareTo(@NonNull Recipe item) {
+        if(this.getId() > item.getId())
+            return 1;
+        if(this.getId() < item.getId())
+            return  -1;
+        return 0;
     }
 }

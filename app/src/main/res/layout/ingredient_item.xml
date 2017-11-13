@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
+        <variable name="context" type="com.example.tanyayuferova.bakingapp.ui.RecipeActivity"/>
         <variable name="ingredient" type="com.example.tanyayuferova.bakingapp.entity.Ingredient" />
     </data>
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <CheckBox
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_ingredient_quantity"
+            style="@style/IngredientDescriptionTextView"
+            bind:doubleValue="@{ingredient.quantity}"
+            tools:text="50"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/iv_measure"
+            android:src="@{ingredient.getMeasureDrawableResource(context)}"
+            android:visibility="@{ingredient.getMeasureDrawableResource(context) == null ? View.GONE : View.VISIBLE}"
+            android:onClick="@{() -> context.ingredientMeasureOnClick(ingredient)}"
+            android:layout_gravity="center_vertical"
+            tools:src="@drawable/ic_measure_cup"
+            android:layout_width="20sp"
+            android:layout_height="20sp" />
+
         <TextView
             android:id="@+id/tv_description"
+            style="@style/IngredientDescriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{ingredient.name}"

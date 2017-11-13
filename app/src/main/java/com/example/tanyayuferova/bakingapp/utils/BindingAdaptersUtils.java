@@ -5,8 +5,11 @@ import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by Tanya Yuferova on 11/10/2017.
@@ -27,5 +30,20 @@ public class BindingAdaptersUtils {
         ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) view.getLayoutParams();
         lp.guidePercent = percent;
         view.setLayoutParams(lp);
+    }
+
+    @BindingAdapter("android:src")
+    public static void setImageDrawable(ImageView view, Drawable drawable) {
+        view.setImageDrawable(drawable);
+    }
+
+    @BindingAdapter("android:src")
+    public static void setImageResource(ImageView imageView, int resource){
+        imageView.setImageResource(resource);
+    }
+
+    @BindingAdapter("bind:doubleValue")
+    public static void setDoubleValue(TextView view, double value) {
+        view.setText(new DecimalFormat("#.##").format(value));
     }
 }
