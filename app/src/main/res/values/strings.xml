@@ -6,6 +6,7 @@
     <string name="step">Step: %1$d</string>
     <string name="move_back">Previous</string>
     <string name="move_next">Next</string>
+    <string name="servings">%1$d servings</string>
 
     <!-- Measure names -->
     <string name="cup_measure">Cup</string>
