@@ -16,6 +16,7 @@ public class Ingredient implements Parcelable {
     private double quantity;
     private String measure;
     private String name;
+    private boolean checked;
 
     public Ingredient() {
 
@@ -43,6 +44,14 @@ public class Ingredient implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public Drawable getMeasureDrawableResource(Context context) {
@@ -87,6 +96,7 @@ public class Ingredient implements Parcelable {
         strings[1] = name;
         parcel.writeStringArray(strings);
         parcel.writeDouble(quantity);
+        parcel.writeInt(checked ? 1 : 0);
     }
 
     public static final Parcelable.Creator<Ingredient> CREATOR = new Parcelable.Creator<Ingredient>() {
@@ -106,6 +116,7 @@ public class Ingredient implements Parcelable {
         name = strings[1];
 
         quantity = parcel.readDouble();
+        checked = parcel.readInt() == 1;
     }
 
     @Override

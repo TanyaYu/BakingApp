@@ -1,59 +1,61 @@
 package com.example.tanyayuferova.bakingapp.ui;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.tanyayuferova.bakingapp.R;
-import com.example.tanyayuferova.bakingapp.databinding.ActivityRecipeBinding;
 import com.example.tanyayuferova.bakingapp.entity.Ingredient;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
 import com.example.tanyayuferova.bakingapp.entity.Step;
 
 import java.util.ArrayList;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends AppCompatActivity implements RecipeStepFragment.OnPageSelectedCallBack {
 
-    protected ActivityRecipeBinding binding;
-    protected IngredientsAdapter ingredientsAdapter;
-    protected StepsAdapter stepsAdapter;
     protected Toast measureHintToast;
     public static final String RECIPE_ITEM_EXTRA = "extra.recipe_item";
+    public static final String SELECTED_POSITION = "state.selected_position";
+    /* True if master detail flow */
+    private boolean twoPane = false;
+    protected Recipe item;
+    /* Selected step (if steps fragment included) */
+    protected int selectedPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
 
-        if(getIntent().hasExtra(RECIPE_ITEM_EXTRA)) {
-            binding.setRecipe((Recipe) getIntent().getParcelableExtra(RECIPE_ITEM_EXTRA));
+        item = getIntent().getParcelableExtra(RECIPE_ITEM_EXTRA);
+        getSupportActionBar().setTitle(item.getName());
+
+        // Master fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.master_list_fragment, RecipeMasterFragment.newInstance(item))
+                .commit();
+
+        if(findViewById(R.id.step_fragment) != null) {
+            twoPane = true;
+
+            if(savedInstanceState != null && savedInstanceState.containsKey(SELECTED_POSITION)) {
+                selectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
+            }
+            // Steps fragment
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.step_fragment, RecipeStepFragment.newInstance(item.getSteps(), selectedPosition))
+                    .commit();
         }
-
-        getSupportActionBar().setTitle(binding.getRecipe().getName());
-
-        initIngredientsTable();
-        initStepsTable();
     }
 
-    protected void initIngredientsTable() {
-        binding.rvIngredients.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvIngredients.setHasFixedSize(true);
-        ingredientsAdapter = new IngredientsAdapter(binding.getRecipe().getIngredients());
-        binding.rvIngredients.setAdapter(ingredientsAdapter);
-        binding.rvIngredients.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-    }
-
-    protected void initStepsTable() {
-        binding.rvSteps.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvSteps.setHasFixedSize(true);
-        stepsAdapter = new StepsAdapter(binding.getRecipe().getSteps());
-        binding.rvSteps.setAdapter(stepsAdapter);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if(outState == null)
+            outState = new Bundle();
+        outState.putInt(SELECTED_POSITION, selectedPosition);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -65,11 +67,22 @@ public class RecipeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * If master detail flow view enable then update steps fragment. Else show steps in new screen
+     * @param step
+     */
     public void stepItemOnClick(Step step) {
-        Intent intent = new Intent(this, StepsActivity.class);
-        intent.putExtra(StepsActivity.STEP_START_INDEX_EXTRA, binding.getRecipe().getSteps().indexOf(step));
-        intent.putParcelableArrayListExtra(StepsActivity.STEPS_EXTRA, new ArrayList<>(binding.getRecipe().getSteps()));
-        startActivity(intent);
+        if(twoPane) {
+            selectedPosition = item.getSteps().indexOf(step);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.step_fragment, RecipeStepFragment.newInstance(item.getSteps(), selectedPosition))
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, StepsActivity.class);
+            intent.putExtra(StepsActivity.STEP_START_INDEX_EXTRA, item.getSteps().indexOf(step));
+            intent.putParcelableArrayListExtra(StepsActivity.STEPS_EXTRA, new ArrayList<>(item.getSteps()));
+            startActivity(intent);
+        }
     }
 
     public void ingredientMeasureOnClick(Ingredient ingredient) {
@@ -78,5 +91,15 @@ public class RecipeActivity extends AppCompatActivity {
         }
         measureHintToast = Toast.makeText(this, ingredient.getMeasureDescription(this), Toast.LENGTH_LONG);
         measureHintToast.show();
+    }
+
+    public void ingredientCheckedOnCLick(Ingredient ingredient) {
+        // Update ingredient
+        item.getIngredients().set(item.getIngredients().indexOf(ingredient), ingredient);
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        selectedPosition = position;
     }
 }

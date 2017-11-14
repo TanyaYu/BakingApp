@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="context" type="com.example.tanyayuferova.bakingapp.ui.RecipeActivity"/>
+        <variable name="handler" type="com.example.tanyayuferova.bakingapp.ui.RecipeActivity"/>
         <variable name="step" type="com.example.tanyayuferova.bakingapp.entity.Step" />
     </data>
 
@@ -12,7 +12,7 @@
         android:padding="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> context.stepItemOnClick(step)}">
+        android:onClick="@{() -> handler.stepItemOnClick(step)}">
 
         <TextView
             android:id="@+id/tv_number"

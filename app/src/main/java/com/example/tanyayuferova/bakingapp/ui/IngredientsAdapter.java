@@ -20,7 +20,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     public IngredientsAdapter() {
     }
 
-    public IngredientsAdapter(List<Ingredient> data){
+    public IngredientsAdapter(List<Ingredient> data) {
         this.data = data;
     }
 
@@ -34,7 +34,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         public void bind(Ingredient item) {
             binding.setIngredient(item);
-            binding.setContext((RecipeActivity) itemView.getContext());
+            binding.setHandler((RecipeActivity) itemView.getContext());
         }
     }
 

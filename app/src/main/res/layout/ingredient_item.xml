@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View" />
-        <variable name="context" type="com.example.tanyayuferova.bakingapp.ui.RecipeActivity"/>
+        <variable name="handler" type="com.example.tanyayuferova.bakingapp.ui.RecipeActivity"/>
         <variable name="ingredient" type="com.example.tanyayuferova.bakingapp.entity.Ingredient" />
     </data>
 
@@ -16,6 +16,9 @@
         android:layout_height="wrap_content">
 
         <CheckBox
+            android:id="@+id/cb_checked_ingredient"
+            android:checked="@={ingredient.checked}"
+            android:onCheckedChanged="@{() -> handler.ingredientCheckedOnCLick(ingredient)}"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -32,7 +35,7 @@
             android:id="@+id/iv_measure"
             android:src="@{ingredient.getMeasureDrawableResource(context)}"
             android:visibility="@{ingredient.getMeasureDrawableResource(context) == null ? View.GONE : View.VISIBLE}"
-            android:onClick="@{() -> context.ingredientMeasureOnClick(ingredient)}"
+            android:onClick="@{() -> handler.ingredientMeasureOnClick(ingredient)}"
             android:layout_gravity="center_vertical"
             tools:src="@drawable/ic_measure_cup"
             android:layout_width="20sp"
