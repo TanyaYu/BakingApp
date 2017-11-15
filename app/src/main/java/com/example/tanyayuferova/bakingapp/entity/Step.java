@@ -18,6 +18,7 @@ public class Step implements Parcelable, Comparable<Step> {
     private String shortDescription;
     private String videoURL;
     private String thumbnailURL;
+    private String imageURL;
 
     public Step() {
 
@@ -63,17 +64,31 @@ public class Step implements Parcelable, Comparable<Step> {
         this.shortDescription = shortDescription;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
     public String getStepTitle(Context context) {
         if(id == 0)
             return getShortDescription();
         return context.getString(R.string.step, id);
     }
 
-    public String getVisualResource() {
+    public String getVideoResource() {
         if(getVideoURL() != null && !getVideoURL().isEmpty())
             return getVideoURL();
         if(getThumbnailURL() != null && !getThumbnailURL().isEmpty())
             return getThumbnailURL();
+        return null;
+    }
+
+    public String getImageResource() {
+        if(getImageURL() != null && !getImageURL().isEmpty())
+            return getImageURL();
         return null;
     }
 
@@ -82,11 +97,12 @@ public class Step implements Parcelable, Comparable<Step> {
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        String[] strings = new String[4];
+        String[] strings = new String[5];
         strings[0] = description;
         strings[1] = videoURL;
         strings[2] = thumbnailURL;
         strings[3] = shortDescription;
+        strings[4] = imageURL;
         parcel.writeStringArray(strings);
 
         parcel.writeInt(id);
@@ -103,12 +119,13 @@ public class Step implements Parcelable, Comparable<Step> {
     };
 
     private Step(Parcel parcel) {
-        String[] strings = new String[4];
+        String[] strings = new String[5];
         parcel.readStringArray(strings);
         description = strings[0];
         videoURL = strings[1];
         thumbnailURL = strings[2];
         shortDescription = strings[3];
+        imageURL = strings[4];
 
         id = parcel.readInt();
     }

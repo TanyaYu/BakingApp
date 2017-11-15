@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_play_recipe"
+        android:icon="@drawable/ic_play_circle"
+        android:orderInCategory="1"
+        android:title="@string/action_play_recipe"
+        app:showAsAction="always" />
+</menu>

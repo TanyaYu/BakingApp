@@ -39,9 +39,9 @@ import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,19 +182,29 @@ public class RecipeStepFragment extends Fragment
 
         // Set player for current step
         setupPlayer(step);
-        // Hide player if there is no visual resource
+
+        // Set image fro current step
+        if(step.getImageResource() != null)
+            Picasso.with(getContext()).load(step.getImageResource()).into(binding.ivStepImage);
+
+        // Hide player and image view if there is no visual resource
         BindingAdaptersUtils.setConstraintGuidePercent(binding.horizontalHalf,
-                step.getVisualResource() == null ? 0.0f : 0.5f);
+                step.getVideoResource() == null && step.getImageResource() == null ? 0.0f : 0.5f);
+        binding.playerView.setVisibility(step.getVideoResource() == null ? View.INVISIBLE : View.VISIBLE);
+        binding.ivStepImage.setVisibility(step.getVideoResource() != null || step.getImageResource() == null ? View.INVISIBLE : View.VISIBLE);
+
         // Setup navigation buttons
         setGoBackVisible(canGoBack() ? View.VISIBLE : View.INVISIBLE);
         setGoNextVisible(canGoNext() ? View.VISIBLE : View.INVISIBLE);
+
         // Show video dialog if orientation is landscape and this is not screen for tablet
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             DisplayMetrics outMetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
             if(outMetrics.widthPixels / getResources().getDisplayMetrics().density < 600)
-                openFullscreenDialog(binding.playerView);
+                openFullscreenDialog(binding.visualResource);
         }
+
         //Notify activity that page has been changed
         onPageSelectedCallBack.onPageSelected(position);
     }
@@ -205,9 +215,9 @@ public class RecipeStepFragment extends Fragment
      */
     private void setupPlayer(Step step) {
         destroyPlayer();
-        if (step.getVisualResource() != null) {
+        if (step.getVideoResource() != null) {
             initializeMediaSession();
-            initializePlayer(Uri.parse(step.getVisualResource()));
+            initializePlayer(Uri.parse(step.getVideoResource()));
         }
     }
 
@@ -361,13 +371,13 @@ public class RecipeStepFragment extends Fragment
     }
 
     /**
-     * Shows player in full screen dialog
-     * @param playerView
+     * Shows view in full screen dialog
+     * @param view
      */
-    private void openFullscreenDialog(SimpleExoPlayerView playerView) {
+    private void openFullscreenDialog(View view) {
         mFullScreenDialog = new Dialog(getContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-        ((ViewGroup) playerView.getParent()).removeView(playerView);
-        mFullScreenDialog.addContentView(playerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ((ViewGroup) view.getParent()).removeView(view);
+        mFullScreenDialog.addContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mFullScreenDialog.show();
     }
 
