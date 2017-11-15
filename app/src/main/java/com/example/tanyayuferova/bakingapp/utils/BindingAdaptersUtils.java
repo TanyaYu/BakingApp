@@ -19,10 +19,11 @@ public class BindingAdaptersUtils {
 
     @BindingAdapter({"bind:imageUrl", "bind:error"})
     public static void loadImage(ImageView view, String url, Drawable error) {
-        Picasso.with(view.getContext()).load(url).error(error).into(view);
-        if(view.getDrawable() == null){
-            view.setImageDrawable(error);
-        }
+        Picasso.with(view.getContext())
+                .load(url)
+                .placeholder(error)
+                .error(error)
+                .into(view);
     }
 
     @BindingAdapter("app:layout_constraintGuide_percent")

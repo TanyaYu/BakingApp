@@ -14,4 +14,7 @@
     <string name="tblsp_measure">Tablespoon</string>
     <string name="g_measure">Grams</string>
     <string name="unit_measure">Unit</string>
+
+    <string name="add_widget">Add widget</string>
+    <string name="empty_view_text">No new recipes</string>
 </resources>
