@@ -43,7 +43,7 @@ public class RecipeActivityTest {
         // Click on measure icon in first ingredient
         onView(withId(R.id.rv_ingredients))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0,
-                        MyViewAction.clickChildViewWithId(R.id.iv_measure)));
+                        CheckChildViewWithId.clickChildViewWithId(R.id.iv_measure)));
 
         // A toast message "Cup" should be displayed
         onView(withText(R.string.cup_measure))
@@ -54,9 +54,9 @@ public class RecipeActivityTest {
 }
 
 /**
- * Click on a child view with specified id
+ * Find child view with id in root view
  */
-class MyViewAction {
+class CheckChildViewWithId {
 
     public static ViewAction clickChildViewWithId(final int id) {
         return new ViewAction() {
@@ -66,16 +66,15 @@ class MyViewAction {
             }
 
             @Override
-            public String getDescription() {
-                return "Click on a child view with specified id.";
-            }
-
-            @Override
             public void perform(UiController uiController, View view) {
                 View v = view.findViewById(id);
                 v.performClick();
             }
+
+            @Override
+            public String getDescription() {
+                return "Click on a child view with id.";
+            }
         };
     }
-
 }
