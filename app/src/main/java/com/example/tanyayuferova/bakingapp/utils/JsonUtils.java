@@ -1,16 +1,14 @@
 package com.example.tanyayuferova.bakingapp.utils;
 
-import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.JsonReader;
 
 import com.example.tanyayuferova.bakingapp.entity.Ingredient;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
 import com.example.tanyayuferova.bakingapp.entity.Step;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,14 +21,15 @@ public class JsonUtils {
 
     /**
      * Reads data from json file and creates Recipe objects
-     * @param context
      * @return List of Recipe objects
      */
-    public static List<Recipe> getAllRecipes(Context context) {
+    public static List<Recipe> getAllRecipes() {
         List<Recipe> result = new ArrayList<>();
         JsonReader reader;
         try {
-            reader = readJSONFile(context);
+            reader = readJSONFile();
+            if(reader == null)
+                return result;
             reader.beginArray();
             while (reader.hasNext()) {
                 result.add(readRecipe(reader));
@@ -206,21 +205,13 @@ public class JsonUtils {
 
     /**
      * Method for creating a JsonReader object that points to the JSON array of samples.
-     * @param context The application context.
      * @return The JsonReader object pointing to the JSON array of samples.
-     * @throws IOException Exception thrown if the sample file can't be found.
      */
-    private static JsonReader readJSONFile(Context context) throws IOException {
-        JsonReader reader = null;
-
-        try {
-            InputStream is = context.getAssets().open("data.json");
-            reader = new JsonReader(new InputStreamReader(is, "UTF-8"));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return reader;
+    @Nullable
+    private static JsonReader readJSONFile() {
+        String jsonData = NetworkUtils.getJsonRecipeData();
+        if(jsonData == null || jsonData.isEmpty())
+            return null;
+        return new JsonReader(new StringReader(jsonData));
     }
 }

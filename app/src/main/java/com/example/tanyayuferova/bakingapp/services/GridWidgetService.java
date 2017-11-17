@@ -46,7 +46,7 @@ class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public void onDataSetChanged() {
         // Display only several first recipes
-        data = JsonUtils.getAllRecipes(context);
+        data = JsonUtils.getAllRecipes();
         if (data.size() > display)
             data = data.subList(0, display);
     }

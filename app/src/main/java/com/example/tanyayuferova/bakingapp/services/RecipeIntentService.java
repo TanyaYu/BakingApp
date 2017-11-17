@@ -47,7 +47,7 @@ public class RecipeIntentService extends IntentService {
     }
 
     private void handleActionUpdateRecipeWidgets() {
-        List<Recipe> allRecipes = JsonUtils.getAllRecipes(this);
+        List<Recipe> allRecipes = JsonUtils.getAllRecipes();
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, RecipeWidget.class));

@@ -1,11 +1,14 @@
 package com.example.tanyayuferova.bakingapp.ui;
 
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tanyayuferova.bakingapp.R;
@@ -17,7 +20,8 @@ import java.util.ArrayList;
 
 public class RecipeActivity extends AppCompatActivity implements RecipeStepFragment.OnPageSelectedCallBack {
 
-    protected Toast measureHintToast;
+    private Snackbar measureHintBar;
+    private CoordinatorLayout coordinatorLayout;
     public static final String RECIPE_ITEM_EXTRA = "extra.recipe_item";
     public static final String SELECTED_POSITION = "state.selected_position";
     /* True if master detail flow */
@@ -31,6 +35,8 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
+        coordinatorLayout = findViewById(R.id.coordinator_layout);
+
         item = getIntent().getParcelableExtra(RECIPE_ITEM_EXTRA);
         getSupportActionBar().setTitle(item.getName());
 
@@ -39,7 +45,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
                 .replace(R.id.master_list_fragment, RecipeMasterFragment.newInstance(item))
                 .commit();
 
-        if(findViewById(R.id.step_fragment) != null) {
+        if(getResources().getBoolean(R.bool.isTablet)) {
             twoPane = true;
 
             if(savedInstanceState != null && savedInstanceState.containsKey(SELECTED_POSITION)) {
@@ -102,11 +108,12 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
     }
 
     public void ingredientMeasureOnClick(Ingredient ingredient) {
-        if(measureHintToast != null) {
-            measureHintToast.cancel();
-        }
-        measureHintToast = Toast.makeText(this, ingredient.getMeasureDescription(this), Toast.LENGTH_LONG);
-        measureHintToast.show();
+        if(measureHintBar != null)
+            measureHintBar.dismiss();
+        measureHintBar = Snackbar.make(coordinatorLayout, ingredient.getMeasureDescription(this), Snackbar.LENGTH_LONG);
+        TextView textView = measureHintBar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(getResources().getColor(R.color.colorTextPrimaryInverse));
+        measureHintBar.show();
     }
 
     public void ingredientCheckedOnCLick(Ingredient ingredient) {

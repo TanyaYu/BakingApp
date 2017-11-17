@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
             @Override
             public List<Recipe> loadInBackground() {
-                return JsonUtils.getAllRecipes(MainActivity.this);
+                return JsonUtils.getAllRecipes();
             }
 
             public void deliverResult(List<Recipe> data) {
