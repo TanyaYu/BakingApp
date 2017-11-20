@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.example.tanyayuferova.bakingapp.R;
+import com.example.tanyayuferova.bakingapp.utils.NetworkUtils;
 
 /**
  * Created by Tanya Yuferova on 11/9/2017.
@@ -64,14 +65,6 @@ public class Step implements Parcelable, Comparable<Step> {
         this.shortDescription = shortDescription;
     }
 
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
     public String getStepTitle(Context context) {
         if(id == 0)
             return getShortDescription();
@@ -81,14 +74,14 @@ public class Step implements Parcelable, Comparable<Step> {
     public String getVideoResource() {
         if(getVideoURL() != null && !getVideoURL().isEmpty())
             return getVideoURL();
-        if(getThumbnailURL() != null && !getThumbnailURL().isEmpty())
+        if(getThumbnailURL() != null && !getThumbnailURL().isEmpty() && NetworkUtils.isVideoFile(getThumbnailURL()))
             return getThumbnailURL();
         return null;
     }
 
     public String getImageResource() {
-        if(getImageURL() != null && !getImageURL().isEmpty())
-            return getImageURL();
+        if(getThumbnailURL() != null && !getThumbnailURL().isEmpty() && NetworkUtils.isImageFile(getThumbnailURL()))
+            return getThumbnailURL();
         return null;
     }
 

@@ -207,20 +207,22 @@ public class RecipeStepFragment extends Fragment
     @Override
     public void onPageSelected(int position) {
         Step step = steps.get(position);
+        String videoResource = step.getVideoResource();
+        String imageResource = step.getImageResource();
 
         // Set player for current step
         destroyPlayer();
-        setupPlayer(step);
+        setupPlayer(videoResource);
 
         // Set image fro current step
-        if(step.getImageResource() != null)
-            Picasso.with(getContext()).load(step.getImageResource()).into(binding.ivStepImage);
+        if(imageResource != null)
+            Picasso.with(getContext()).load(imageResource).into(binding.ivStepImage);
 
         // Hide player and image view if there is no visual resource
         BindingAdaptersUtils.setConstraintGuidePercent(binding.horizontalHalf,
-                step.getVideoResource() == null && step.getImageResource() == null ? 0.0f : 0.5f);
-        binding.playerView.setVisibility(step.getVideoResource() == null ? View.INVISIBLE : View.VISIBLE);
-        binding.ivStepImage.setVisibility(step.getVideoResource() != null || step.getImageResource() == null ? View.INVISIBLE : View.VISIBLE);
+                 videoResource == null && imageResource == null ? 0.0f : 0.5f);
+        binding.playerView.setVisibility(videoResource == null ? View.INVISIBLE : View.VISIBLE);
+        binding.ivStepImage.setVisibility(videoResource != null || imageResource == null ? View.INVISIBLE : View.VISIBLE);
 
         // Setup navigation buttons
         setGoBackVisible(canGoBack() ? View.VISIBLE : View.INVISIBLE);
@@ -232,12 +234,12 @@ public class RecipeStepFragment extends Fragment
 
     /**
      * Inits player for current step id there is visual resource or destroy player if not
-     * @param step
+     * @param videoUrl
      */
-    private void setupPlayer(Step step) {
-        if (step.getVideoResource() != null) {
+    private void setupPlayer(String videoUrl) {
+        if(videoUrl != null && !videoUrl.isEmpty()) {
             initializeMediaSession();
-            initializePlayer(Uri.parse(step.getVideoResource()));
+            initializePlayer(Uri.parse(videoUrl));
         }
     }
 
@@ -327,7 +329,7 @@ public class RecipeStepFragment extends Fragment
         super.onStart();
         if(mExoPlayer == null) {
             Step step = steps.get(binding.viewPager.getCurrentItem());
-            setupPlayer(step);
+            setupPlayer(step.getVideoResource());
         }
     }
 
