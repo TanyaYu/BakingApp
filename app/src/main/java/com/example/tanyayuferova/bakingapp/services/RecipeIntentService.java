@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.tanyayuferova.bakingapp.IngredientsWidget;
 import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.RecipeWidget;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
@@ -20,19 +21,29 @@ import java.util.List;
 public class RecipeIntentService extends IntentService {
 
     public static final String ACTION_UPDATE_RECIPE_WIDGETS = "action.update_recipe_widgets";
+    public static final String ACTION_UPDATE_INGREDIENTS_WIDGETS = "action.update_ingredients_widgets";
 
     public RecipeIntentService() {
         super("RecipeIntentService");
     }
     /**
-     * Starts this service to perform UpdatePlantWidgets action with the given parameters. If
-     * the service is already performing a task this action will be queued.
+     * Starts this service to perform UpdateRecipeWidgets action with the given parameters
      *
      * @see IntentService
      */
-    public static void startActionUpdateWidgets(Context context) {
+    public static void startActionUpdateRecipeWidgets(Context context) {
         Intent intent = new Intent(context, RecipeIntentService.class);
         intent.setAction(ACTION_UPDATE_RECIPE_WIDGETS);
+        context.startService(intent);
+    }
+    /**
+     * Starts this service to perform UpdateIngredientsWidgets action with the given parameters
+     *
+     * @see IntentService
+     */
+    public static void startActionUpdateIngredientsWidgets(Context context) {
+        Intent intent = new Intent(context, RecipeIntentService.class);
+        intent.setAction(ACTION_UPDATE_INGREDIENTS_WIDGETS);
         context.startService(intent);
     }
 
@@ -42,8 +53,17 @@ public class RecipeIntentService extends IntentService {
             final String action = intent.getAction();
             if (ACTION_UPDATE_RECIPE_WIDGETS.equals(action)) {
                 handleActionUpdateRecipeWidgets();
+            } else if (ACTION_UPDATE_INGREDIENTS_WIDGETS.equals(action)) {
+                handleActionUpdateIngredientsWidgets();
             }
         }
+    }
+
+    private void handleActionUpdateIngredientsWidgets() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, IngredientsWidget.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_widget_grid_view);
+        IngredientsWidget.updateIngredientsWidgets(this, appWidgetManager, appWidgetIds);
     }
 
     private void handleActionUpdateRecipeWidgets() {

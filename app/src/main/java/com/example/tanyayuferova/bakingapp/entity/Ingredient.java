@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
 
 import com.example.tanyayuferova.bakingapp.R;
 
@@ -68,6 +69,23 @@ public class Ingredient implements Parcelable {
             return context.getResources().getDrawable(R.drawable.ic_measure_cup);
         }
         return null;
+    }
+
+    @DrawableRes
+    public int getMeasureIdResource(Context context) {
+        String[] measureTypes = context.getResources().getStringArray(R.array.measure_types);
+        if(measureTypes[0].equals(measure)) { //G
+            return R.drawable.ic_g;
+        } else if(measureTypes[1].equals(measure)) { //TSP
+            return R.drawable.ic_teaspoon;
+        } else if(measureTypes[2].equals(measure)) { //TBLSP
+            return R.drawable.ic_spoon;
+        } else if(measureTypes[3].equals(measure)) { //UNIT
+            return 0;
+        } else if(measureTypes[4].equals(measure)) { //CUP
+            return R.drawable.ic_measure_cup;
+        }
+        return 0;
     }
 
     public String getMeasureDescription(Context context) {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_ingredient_quantity"
+        style="@style/IngredientDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryText"
+        tools:text="50" />
+
+    <ImageView
+        android:id="@+id/iv_measure"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_gravity="center_vertical"
+        tools:src="@drawable/ic_measure_cup" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        style="@style/IngredientDescriptionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryText"
+        tools:text="Ingredient name" />
+
+</LinearLayout>

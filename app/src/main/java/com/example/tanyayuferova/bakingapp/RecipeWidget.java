@@ -39,7 +39,7 @@ public class RecipeWidget extends AppWidgetProvider {
     }
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        RecipeIntentService.startActionUpdateWidgets(context);
+        RecipeIntentService.startActionUpdateRecipeWidgets(context);
     }
 
     /**
@@ -114,7 +114,7 @@ public class RecipeWidget extends AppWidgetProvider {
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
                                           int appWidgetId, Bundle newOptions) {
-        RecipeIntentService.startActionUpdateWidgets(context);
+        RecipeIntentService.startActionUpdateRecipeWidgets(context);
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
