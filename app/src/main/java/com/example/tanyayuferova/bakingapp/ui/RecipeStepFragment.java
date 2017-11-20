@@ -16,11 +16,11 @@ import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.databinding.FragmentRecipeStepBinding;
 import com.example.tanyayuferova.bakingapp.databinding.FragmentStepsBinding;
 import com.example.tanyayuferova.bakingapp.entity.Step;
@@ -29,7 +29,6 @@ import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -38,7 +37,6 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.squareup.picasso.Picasso;
@@ -56,14 +54,17 @@ public class RecipeStepFragment extends Fragment
     private FragmentRecipeStepBinding binding;
     private StepDescriptionPagerAdapter stepDescriptionPagerAdapter;
     private List<Step> steps;
+    private long playerPosition = 0;
 
     private static MediaSessionCompat mMediaSession;
     private SimpleExoPlayer mExoPlayer;
     private PlaybackStateCompat.Builder mStateBuilder;
     private Dialog mFullScreenDialog;
 
-    public static final String STEPS_ARGUMENT = "arg.steps";
-    public static final String STEP_START_INDEX_ARGUMENT = "arg.step_item";
+    public static final String ARGUMENT_STEPS = "arg.steps";
+    public static final String ARGUMENT_SELECTED_INDEX = "arg.selected_index";
+    public static final String STATE_SELECTED_INDEX = "state.selected_index";
+    public static final String STATE_PLAYER_POSITION = "state.player_position";
     private static final String TAG = RecipeStepFragment.class.getSimpleName();
 
     private OnPageSelectedCallBack onPageSelectedCallBack;
@@ -78,8 +79,8 @@ public class RecipeStepFragment extends Fragment
     public static RecipeStepFragment newInstance(List<Step> steps, int selectedIndex) {
         RecipeStepFragment fragment = new RecipeStepFragment();
         fragment.setArguments(new Bundle());
-        fragment.getArguments().putParcelableArrayList(STEPS_ARGUMENT, new ArrayList<Parcelable>(steps));
-        fragment.getArguments().putInt(STEP_START_INDEX_ARGUMENT, selectedIndex);
+        fragment.getArguments().putParcelableArrayList(ARGUMENT_STEPS, new ArrayList<Parcelable>(steps));
+        fragment.getArguments().putInt(ARGUMENT_SELECTED_INDEX, selectedIndex);
         return fragment;
     }
 
@@ -98,18 +99,18 @@ public class RecipeStepFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentRecipeStepBinding.inflate(inflater, container, false);
+        int selectedIndex = savedInstanceState == null ? getArguments().getInt(ARGUMENT_SELECTED_INDEX)
+                : savedInstanceState.getInt(STATE_SELECTED_INDEX);
+        playerPosition = savedInstanceState != null && savedInstanceState.containsKey(STATE_PLAYER_POSITION) ?
+                savedInstanceState.getLong(STATE_PLAYER_POSITION) : 0;
 
-        steps = getArguments().getParcelableArrayList(STEPS_ARGUMENT);
-        int selectedPosition = getArguments().getInt(STEP_START_INDEX_ARGUMENT, 0);
+        binding = FragmentRecipeStepBinding.inflate(inflater, container, false);
+        steps = getArguments().getParcelableArrayList(ARGUMENT_STEPS);
 
         stepDescriptionPagerAdapter = new StepDescriptionPagerAdapter(getChildFragmentManager());
         binding.viewPager.setAdapter(stepDescriptionPagerAdapter);
         binding.viewPager.addOnPageChangeListener(this);
-        binding.viewPager.setCurrentItem(selectedPosition);
-        // For the first page onPageSelected is not called
-        if(selectedPosition == 0)
-            onPageSelected(selectedPosition);
+        setViewPagerPosition(selectedIndex);
 
         View.OnClickListener backNavigation = new OnNavigationBackClickListener();
         View.OnClickListener forwardNavigation = new OnNavigationForwardClickListener();
@@ -119,6 +120,26 @@ public class RecipeStepFragment extends Fragment
         binding.ivNext.setOnClickListener(forwardNavigation);
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(outState==null)
+            outState = new Bundle();
+        outState.putInt(STATE_SELECTED_INDEX, binding.viewPager.getCurrentItem());
+        if(mExoPlayer != null)
+            outState.putLong(STATE_PLAYER_POSITION, mExoPlayer.getCurrentPosition());
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        // Show video dialog if orientation is landscape and this is not screen for tablet
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+                && !getResources().getBoolean(R.bool.isTablet)) {
+            openFullscreenDialog(binding.visualResource);
+        }
+        super.onViewCreated(view, savedInstanceState);
     }
 
     /**
@@ -176,11 +197,19 @@ public class RecipeStepFragment extends Fragment
         }
     }
 
+    public void setViewPagerPosition(int position) {
+        binding.viewPager.setCurrentItem(position);
+        // For the first page onPageSelected is not called
+        if(position == 0)
+            onPageSelected(position);
+    }
+
     @Override
     public void onPageSelected(int position) {
         Step step = steps.get(position);
 
         // Set player for current step
+        destroyPlayer();
         setupPlayer(step);
 
         // Set image fro current step
@@ -197,14 +226,6 @@ public class RecipeStepFragment extends Fragment
         setGoBackVisible(canGoBack() ? View.VISIBLE : View.INVISIBLE);
         setGoNextVisible(canGoNext() ? View.VISIBLE : View.INVISIBLE);
 
-        // Show video dialog if orientation is landscape and this is not screen for tablet
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            DisplayMetrics outMetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
-            if(outMetrics.widthPixels / getResources().getDisplayMetrics().density < 600)
-                openFullscreenDialog(binding.visualResource);
-        }
-
         //Notify activity that page has been changed
         onPageSelectedCallBack.onPageSelected(position);
     }
@@ -214,7 +235,6 @@ public class RecipeStepFragment extends Fragment
      * @param step
      */
     private void setupPlayer(Step step) {
-        destroyPlayer();
         if (step.getVideoResource() != null) {
             initializeMediaSession();
             initializePlayer(Uri.parse(step.getVideoResource()));
@@ -259,20 +279,18 @@ public class RecipeStepFragment extends Fragment
      * @param mediaUri The URI of the sample to play.
      */
     private void initializePlayer(Uri mediaUri) {
-        if (mExoPlayer == null) {
-            TrackSelector trackSelector = new DefaultTrackSelector();
-            LoadControl loadControl = new DefaultLoadControl();
-            mExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector, loadControl);
-            binding.playerView.setPlayer(mExoPlayer);
+        mExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), new DefaultTrackSelector(), new DefaultLoadControl());
+        binding.playerView.setPlayer(mExoPlayer);
 
-            mExoPlayer.addListener(this);
+        mExoPlayer.addListener(this);
 
-            String userAgent = Util.getUserAgent(getContext(), "BakingApp");
-            MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
-                    getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
-            mExoPlayer.prepare(mediaSource);
-            mExoPlayer.setPlayWhenReady(true);
-        }
+        String userAgent = Util.getUserAgent(getContext(), "BakingApp");
+        MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
+                getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
+        mExoPlayer.prepare(mediaSource);
+        mExoPlayer.setPlayWhenReady(true);
+        mExoPlayer.seekTo(playerPosition);
+        playerPosition = 0;
     }
 
     /**
@@ -299,7 +317,18 @@ public class RecipeStepFragment extends Fragment
     @Override
     public void onStop() {
         super.onStop();
+        if(mExoPlayer != null)
+            playerPosition = mExoPlayer.getCurrentPosition();
         destroyPlayer();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(mExoPlayer == null) {
+            Step step = steps.get(binding.viewPager.getCurrentItem());
+            setupPlayer(step);
+        }
     }
 
     @Override

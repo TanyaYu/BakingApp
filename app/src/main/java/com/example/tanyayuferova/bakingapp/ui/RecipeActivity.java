@@ -6,10 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.entity.Ingredient;
@@ -23,12 +21,10 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
     private Snackbar measureHintBar;
     private CoordinatorLayout coordinatorLayout;
     public static final String RECIPE_ITEM_EXTRA = "extra.recipe_item";
-    public static final String SELECTED_POSITION = "state.selected_position";
     /* True if master detail flow */
     private boolean twoPane = false;
     protected Recipe item;
-    /* Selected step (if steps fragment included) */
-    protected int selectedPosition = 0;
+    private RecipeStepFragment stepFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +37,21 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
         getSupportActionBar().setTitle(item.getName());
 
         // Master fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.master_list_fragment, RecipeMasterFragment.newInstance(item))
-                .commit();
+        if(getSupportFragmentManager().findFragmentById(R.id.master_list_fragment) == null)
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.master_list_fragment, RecipeMasterFragment.newInstance(item))
+                    .commit();
 
         if(getResources().getBoolean(R.bool.isTablet)) {
             twoPane = true;
-
-            if(savedInstanceState != null && savedInstanceState.containsKey(SELECTED_POSITION)) {
-                selectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
-            }
             // Steps fragment
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.step_fragment, RecipeStepFragment.newInstance(item.getSteps(), selectedPosition))
-                    .commit();
+            stepFragment = (RecipeStepFragment) getSupportFragmentManager().findFragmentById(R.id.step_fragment);
+            if(stepFragment==null) {
+                stepFragment = RecipeStepFragment.newInstance(item.getSteps(), 0);
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.step_fragment, stepFragment)
+                        .commit();
+            }
         }
     }
 
@@ -64,14 +61,6 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
         // Play action is enable only for one pane view
         menu.findItem(R.id.action_play_recipe).setVisible(!twoPane);
         return true;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        if(outState == null)
-            outState = new Bundle();
-        outState.putInt(SELECTED_POSITION, selectedPosition);
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -95,10 +84,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
      */
     public void stepItemOnClick(Step step) {
         if(twoPane) {
-            selectedPosition = item.getSteps().indexOf(step);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.step_fragment, RecipeStepFragment.newInstance(item.getSteps(), selectedPosition))
-                    .commit();
+            stepFragment.setViewPagerPosition(item.getSteps().indexOf(step));
         } else {
             Intent intent = new Intent(this, StepsActivity.class);
             intent.putExtra(StepsActivity.STEP_START_INDEX_EXTRA, item.getSteps().indexOf(step));
@@ -123,6 +109,5 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
 
     @Override
     public void onPageSelected(int position) {
-        selectedPosition = position;
     }
 }

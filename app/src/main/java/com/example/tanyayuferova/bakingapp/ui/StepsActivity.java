@@ -14,9 +14,7 @@ public class StepsActivity extends AppCompatActivity implements RecipeStepFragme
 
     public static final String STEPS_EXTRA = "extra.steps";
     public static final String STEP_START_INDEX_EXTRA = "extra.step_item";
-    public static final String SELECTED_POSITION = "state.selected_position";
     protected List<Step> steps;
-    protected int selectedPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +23,13 @@ public class StepsActivity extends AppCompatActivity implements RecipeStepFragme
 
         steps = getIntent().getParcelableArrayListExtra(STEPS_EXTRA);
 
-        if(savedInstanceState == null)
-            selectedPosition = getIntent().getIntExtra(STEP_START_INDEX_EXTRA, 0);
-        else
-            selectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
+        if(getSupportFragmentManager().findFragmentById(R.id.step_fragment)==null) {
+            int selectedPosition = getIntent().getIntExtra(STEP_START_INDEX_EXTRA, 0);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.step_fragment, RecipeStepFragment.newInstance(steps, selectedPosition))
-                .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.step_fragment, RecipeStepFragment.newInstance(steps, selectedPosition))
+                    .commit();
+        }
     }
 
     @Override
@@ -45,16 +42,7 @@ public class StepsActivity extends AppCompatActivity implements RecipeStepFragme
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        if(outState == null)
-            outState = new Bundle();
-        outState.putInt(SELECTED_POSITION, selectedPosition);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onPageSelected(int position) {
-        selectedPosition = position;
         // Set Title for current step
         getSupportActionBar().setTitle(steps.get(position).getStepTitle(this));
     }
