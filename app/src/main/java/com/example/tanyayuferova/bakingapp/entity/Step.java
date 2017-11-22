@@ -72,10 +72,8 @@ public class Step implements Parcelable, Comparable<Step> {
     }
 
     public String getVideoResource() {
-        if(getVideoURL() != null && !getVideoURL().isEmpty())
+        if(getVideoURL() != null && !getVideoURL().isEmpty() && NetworkUtils.isVideoFile(getVideoURL()))
             return getVideoURL();
-        if(getThumbnailURL() != null && !getThumbnailURL().isEmpty() && NetworkUtils.isVideoFile(getThumbnailURL()))
-            return getThumbnailURL();
         return null;
     }
 

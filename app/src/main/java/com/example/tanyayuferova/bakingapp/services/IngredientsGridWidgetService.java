@@ -12,7 +12,7 @@ import com.example.tanyayuferova.bakingapp.entity.Recipe;
 import com.example.tanyayuferova.bakingapp.ui.RecipeActivity;
 import com.example.tanyayuferova.bakingapp.utils.JsonUtils;
 
-import java.util.List;
+import java.text.DecimalFormat;
 
 /**
  * Created by Tanya Yuferova on 11/20/2017.
@@ -22,17 +22,19 @@ public class IngredientsGridWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new IngredientsGridRemoteViewsFactory(this.getApplicationContext());
+        return new IngredientsGridRemoteViewsFactory(this.getApplicationContext(), intent);
     }
 }
 
 class IngredientsGridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    Context context;
-    Recipe recipe;
+    private Context context;
+    private Recipe recipe;
+    private int recipeId;
 
-    public IngredientsGridRemoteViewsFactory(Context applicationContext) {
+    public IngredientsGridRemoteViewsFactory(Context applicationContext, Intent intent) {
         context = applicationContext;
+        recipeId = intent.getIntExtra(RecipeIntentService.EXTRA_RECIPE_ITEM_ID, 0);
     }
 
     @Override
@@ -42,10 +44,7 @@ class IngredientsGridRemoteViewsFactory implements RemoteViewsService.RemoteView
 
     @Override
     public void onDataSetChanged() {
-        List<Recipe> allRecipes = JsonUtils.getAllRecipes();
-        if (allRecipes != null && allRecipes.size() > 0) {
-            recipe = allRecipes.get(0);
-        }
+        recipe = JsonUtils.getRecipe(recipeId);
     }
 
     @Override
@@ -77,7 +76,7 @@ class IngredientsGridRemoteViewsFactory implements RemoteViewsService.RemoteView
         // Ingredient name
         views.setTextViewText(R.id.tv_description, ingredient.getName());
         // Ingredient quantity
-        views.setTextViewText(R.id.tv_ingredient_quantity, String.valueOf(ingredient.getQuantity()));
+        views.setTextViewText(R.id.tv_ingredient_quantity, new DecimalFormat("#.##").format(ingredient.getQuantity()));
 
         // Pending intent
         Intent fillInIntent = new Intent();

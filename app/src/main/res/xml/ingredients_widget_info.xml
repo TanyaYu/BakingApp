@@ -3,9 +3,10 @@
 
     android:initialKeyguardLayout="@layout/ingredients_widget"
     android:initialLayout="@layout/ingredients_widget"
+    android:configure="com.example.tanyayuferova.bakingapp.ui.IngredientsWidgetConfigActivity"
     android:minHeight="110dp"
     android:minWidth="110dp"
     android:previewImage="@drawable/ic_measure_cup"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="86400000"
+    android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"/>

@@ -1,58 +1,63 @@
 package com.example.tanyayuferova.bakingapp.ui;
 
+import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.graphics.Point;
+import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.example.tanyayuferova.bakingapp.R;
-import com.example.tanyayuferova.bakingapp.databinding.ActivityMainBinding;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
+import com.example.tanyayuferova.bakingapp.services.RecipeIntentService;
 import com.example.tanyayuferova.bakingapp.utils.JsonUtils;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Recipe>>,
-    RecipesAdapter.RecipesOnClickHandler{
+/**
+ * Created by Tanya Yuferova on 11/20/2017.
+ */
 
-    private ActivityMainBinding binding;
+public class IngredientsWidgetConfigActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<List<Recipe>>, RecipesAdapter.RecipesOnClickHandler {
+
     protected RecipesAdapter recipesAdapter;
-    private static final int RECIPES_LOADER_ID = 1;
+    private static final int RECIPES_LOADER_ID = 11;
+    private RecyclerView recyclerView;
+
+    private int widgetId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setContentView(R.layout.activity_ingredients_configuration);
+        recyclerView = findViewById(R.id.rv_recipes);
+
+        setResult(RESULT_CANCELED);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            widgetId = extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
 
         initRecyclerView();
     }
 
     protected void initRecyclerView(){
-        Point size = new Point();
-        getWindowManager().getDefaultDisplay().getSize(size);
-        int columns;
-        if(size.x < 1100)
-            columns = 1;
-        else if(size.x < 1800)
-            columns = 2;
-        else if(size.x < 2600)
-            columns = 3;
-        else columns = 4;
-
-        GridLayoutManager layoutManager = new GridLayoutManager(this, columns);
-        binding.rvRecipes.setLayoutManager(layoutManager);
-        binding.rvRecipes.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
         recipesAdapter = new RecipesAdapter(this);
-        binding.rvRecipes.setAdapter(recipesAdapter);
-        getSupportLoaderManager().initLoader(RECIPES_LOADER_ID, null, MainActivity.this);
+        recyclerView.setAdapter(recipesAdapter);
+        getSupportLoaderManager().initLoader(RECIPES_LOADER_ID, null, IngredientsWidgetConfigActivity.this);
     }
 
     @Override
@@ -66,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 if (data != null) {
                     deliverResult(data);
                 } else {
-                    binding.progress.setVisibility(View.VISIBLE);
                     forceLoad();
                 }
             }
@@ -84,9 +88,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Recipe>> loader, List<Recipe> data) {
-        binding.progress.setVisibility(View.INVISIBLE);
         if (data == null) {
-            Toast.makeText(MainActivity.this, getString(R.string.load_error), Toast.LENGTH_LONG)
+            Toast.makeText(this, getString(R.string.load_error), Toast.LENGTH_LONG)
                     .show();
         }
         recipesAdapter.setData(data);
@@ -99,8 +102,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClickRecipe(Recipe recipe) {
-        Intent intent = new Intent(this, RecipeActivity.class);
-        intent.putExtra(RecipeActivity.RECIPE_ITEM_EXTRA, recipe);
-        startActivity(intent);
+        RecipeIntentService.startActionUpdateIngredientsWidget(this, widgetId, recipe);
+
+        Intent resultValue = new Intent();
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        setResult(Activity.RESULT_OK, resultValue);
+        finish();
     }
 }

@@ -4,15 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="context" type="com.example.tanyayuferova.bakingapp.ui.MainActivity"/>
         <variable name="recipe" type="com.example.tanyayuferova.bakingapp.entity.Recipe" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:onClick="@{() -> context.recipeItemOnClick(recipe)}">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/iv_recipe_preview"

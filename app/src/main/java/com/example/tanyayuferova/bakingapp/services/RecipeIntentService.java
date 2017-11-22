@@ -20,8 +20,10 @@ import java.util.List;
 
 public class RecipeIntentService extends IntentService {
 
-    public static final String ACTION_UPDATE_RECIPE_WIDGETS = "action.update_recipe_widgets";
+    public static final String ACTION_UPDATE_RECIPE_WIDGET = "action.update_recipe_widget";
     public static final String ACTION_UPDATE_INGREDIENTS_WIDGETS = "action.update_ingredients_widgets";
+    public static final String EXTRA_RECIPE_ITEM_ID = "extra.recipe_id";
+    public static final String EXTRA_RECIPE_ITEM_NAME = "extra.recipe_name";
 
     public RecipeIntentService() {
         super("RecipeIntentService");
@@ -33,7 +35,7 @@ public class RecipeIntentService extends IntentService {
      */
     public static void startActionUpdateRecipeWidgets(Context context) {
         Intent intent = new Intent(context, RecipeIntentService.class);
-        intent.setAction(ACTION_UPDATE_RECIPE_WIDGETS);
+        intent.setAction(ACTION_UPDATE_RECIPE_WIDGET);
         context.startService(intent);
     }
     /**
@@ -41,9 +43,12 @@ public class RecipeIntentService extends IntentService {
      *
      * @see IntentService
      */
-    public static void startActionUpdateIngredientsWidgets(Context context) {
+    public static void startActionUpdateIngredientsWidget(Context context, int widgetId, Recipe recipe) {
         Intent intent = new Intent(context, RecipeIntentService.class);
         intent.setAction(ACTION_UPDATE_INGREDIENTS_WIDGETS);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        intent.putExtra(EXTRA_RECIPE_ITEM_ID, recipe.getId());
+        intent.putExtra(EXTRA_RECIPE_ITEM_NAME, recipe.getName());
         context.startService(intent);
     }
 
@@ -51,19 +56,21 @@ public class RecipeIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_UPDATE_RECIPE_WIDGETS.equals(action)) {
+            if (ACTION_UPDATE_RECIPE_WIDGET.equals(action)) {
                 handleActionUpdateRecipeWidgets();
             } else if (ACTION_UPDATE_INGREDIENTS_WIDGETS.equals(action)) {
-                handleActionUpdateIngredientsWidgets();
+                int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+                int recipeId = intent.getIntExtra(EXTRA_RECIPE_ITEM_ID, 0);
+                String recipeName = intent.getStringExtra(EXTRA_RECIPE_ITEM_NAME);
+                handleActionUpdateIngredientsWidget(widgetId, recipeId, recipeName);
             }
         }
     }
 
-    private void handleActionUpdateIngredientsWidgets() {
+    private void handleActionUpdateIngredientsWidget(int widgetId, int recipeId, String recipeName) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, IngredientsWidget.class));
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_widget_grid_view);
-        IngredientsWidget.updateIngredientsWidgets(this, appWidgetManager, appWidgetIds);
+        appWidgetManager.notifyAppWidgetViewDataChanged(widgetId, R.id.ingredients_widget_grid_view);
+        IngredientsWidget.updateIngredientsWidget(this, appWidgetManager, widgetId, recipeId, recipeName);
     }
 
     private void handleActionUpdateRecipeWidgets() {

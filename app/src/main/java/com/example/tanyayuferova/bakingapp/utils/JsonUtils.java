@@ -20,6 +20,21 @@ import java.util.List;
 public class JsonUtils {
 
     /**
+     * Gets Recipe with specific id
+     * @param id
+     * @return
+     */
+    public static Recipe getRecipe(int id) {
+        List<Recipe> allRecipes = getAllRecipes();
+        Recipe item = new Recipe();
+        item.setId(id);
+        int index = allRecipes.indexOf(item);
+        if(index >= 0)
+            return allRecipes.get(index);
+        return null;
+    }
+
+    /**
      * Reads data from json file and creates Recipe objects
      * @return List of Recipe objects
      */

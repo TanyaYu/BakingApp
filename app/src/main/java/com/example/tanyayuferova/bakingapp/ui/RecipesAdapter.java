@@ -2,6 +2,7 @@ package com.example.tanyayuferova.bakingapp.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tanyayuferova.bakingapp.databinding.RecipeItemBinding;
@@ -15,12 +16,18 @@ import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesAdapterViewHolder> {
 
-    private List<Recipe> data;
-
-    public RecipesAdapter() {
+    interface RecipesOnClickHandler {
+        void onClickRecipe(Recipe recipe);
     }
 
-    public class RecipesAdapterViewHolder extends RecyclerView.ViewHolder {
+    private List<Recipe> data;
+    private RecipesOnClickHandler clickHandler;
+
+    public RecipesAdapter(RecipesOnClickHandler clickHandler) {
+        this.clickHandler = clickHandler;
+    }
+
+    public class RecipesAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         protected final RecipeItemBinding binding;
 
         public RecipesAdapterViewHolder(RecipeItemBinding binding) {
@@ -30,7 +37,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesA
 
         public void bind(Recipe item) {
             binding.setRecipe(item);
-            binding.setContext((MainActivity) itemView.getContext());
+            binding.getRoot().setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            clickHandler.onClickRecipe(binding.getRecipe());
         }
     }
 
