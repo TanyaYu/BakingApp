@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp.ui;
+package com.example.tanyayuferova.bakingapp.ui.activities;
 
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,6 +13,8 @@ import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.entity.Ingredient;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
 import com.example.tanyayuferova.bakingapp.entity.Step;
+import com.example.tanyayuferova.bakingapp.ui.fragments.RecipeMasterFragment;
+import com.example.tanyayuferova.bakingapp.ui.fragments.RecipeStepFragment;
 
 import java.util.ArrayList;
 
@@ -65,10 +67,6 @@ public class RecipeActivity extends AppCompatActivity implements RecipeStepFragm
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
         if(item.getItemId() == R.id.action_play_recipe) {
             // Start playing recipe with the first
             if(this.item.getSteps().size() > 0)

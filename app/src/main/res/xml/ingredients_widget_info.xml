@@ -3,7 +3,7 @@
 
     android:initialKeyguardLayout="@layout/ingredients_widget"
     android:initialLayout="@layout/ingredients_widget"
-    android:configure="com.example.tanyayuferova.bakingapp.ui.IngredientsWidgetConfigActivity"
+    android:configure="com.example.tanyayuferova.bakingapp.ui.activities.IngredientsWidgetConfigActivity"
     android:minHeight="110dp"
     android:minWidth="110dp"
     android:previewImage="@drawable/ic_measure_cup"

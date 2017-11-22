@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp.ui;
+package com.example.tanyayuferova.bakingapp.ui.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,14 +16,14 @@ import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipesAdapterViewHolder> {
 
-    interface RecipesOnClickHandler {
+    public interface OnClickRecipesHandler {
         void onClickRecipe(Recipe recipe);
     }
 
     private List<Recipe> data;
-    private RecipesOnClickHandler clickHandler;
+    private OnClickRecipesHandler clickHandler;
 
-    public RecipesAdapter(RecipesOnClickHandler clickHandler) {
+    public RecipesAdapter(OnClickRecipesHandler clickHandler) {
         this.clickHandler = clickHandler;
     }
 

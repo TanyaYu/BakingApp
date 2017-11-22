@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View" />
-        <variable name="handler" type="com.example.tanyayuferova.bakingapp.ui.RecipeActivity"/>
+        <variable name="handler" type="com.example.tanyayuferova.bakingapp.ui.activities.RecipeActivity"/>
         <variable name="ingredient" type="com.example.tanyayuferova.bakingapp.entity.Ingredient" />
     </data>
 

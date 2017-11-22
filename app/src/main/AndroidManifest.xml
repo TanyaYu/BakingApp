@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity">
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,28 +21,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.RecipeActivity"
-            android:parentActivityName=".ui.MainActivity">
+            android:name=".ui.activities.RecipeActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value=".ui.activities.MainActivity" />
         </activity>
 
-        <receiver android:name=".ui.RecipeStepFragment$MediaReceiver">
+        <receiver android:name=".ui.fragments.RecipeStepFragment$MediaReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name=".ui.StepsActivity"
-            android:parentActivityName=".ui.RecipeActivity">
+            android:name=".ui.activities.StepsActivity"
+            android:parentActivityName=".ui.activities.RecipeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.RecipeActivity" />
+                android:value=".ui.activities.RecipeActivity" />
         </activity>
 
-        <receiver android:name=".RecipeWidget"
+        <receiver android:name=".ui.widgets.RecipeWidget"
             android:label="@string/recipes_widget_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -51,13 +54,13 @@
                 android:resource="@xml/recipe_widget_info" />
         </receiver>
 
-        <activity android:name=".ui.IngredientsWidgetConfigActivity">
+        <activity android:name=".ui.activities.IngredientsWidgetConfigActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
-        <receiver android:name=".IngredientsWidget"
+        <receiver android:name=".ui.widgets.IngredientsWidget"
             android:label="@string/ingredients_widget_label">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

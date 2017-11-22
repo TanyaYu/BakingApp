@@ -4,7 +4,7 @@ import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.tanyayuferova.bakingapp.ui.MainActivity;
+import com.example.tanyayuferova.bakingapp.ui.activities.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

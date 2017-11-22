@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp;
+package com.example.tanyayuferova.bakingapp.ui.widgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -7,9 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.services.IngredientsGridWidgetService;
 import com.example.tanyayuferova.bakingapp.services.RecipeIntentService;
-import com.example.tanyayuferova.bakingapp.ui.RecipeActivity;
+import com.example.tanyayuferova.bakingapp.ui.activities.RecipeActivity;
 
 public class IngredientsWidget extends AppWidgetProvider {
 

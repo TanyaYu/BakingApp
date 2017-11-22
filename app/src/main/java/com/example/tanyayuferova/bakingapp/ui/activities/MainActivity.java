@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp.ui;
+package com.example.tanyayuferova.bakingapp.ui.activities;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -15,12 +15,13 @@ import android.widget.Toast;
 import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.databinding.ActivityMainBinding;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
+import com.example.tanyayuferova.bakingapp.ui.adapters.RecipesAdapter;
 import com.example.tanyayuferova.bakingapp.utils.JsonUtils;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Recipe>>,
-    RecipesAdapter.RecipesOnClickHandler{
+        RecipesAdapter.OnClickRecipesHandler {
 
     private ActivityMainBinding binding;
     protected RecipesAdapter recipesAdapter;

@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp.ui;
+package com.example.tanyayuferova.bakingapp.ui.activities;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
 import com.example.tanyayuferova.bakingapp.services.RecipeIntentService;
+import com.example.tanyayuferova.bakingapp.ui.adapters.RecipesAdapter;
 import com.example.tanyayuferova.bakingapp.utils.JsonUtils;
 
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 
 public class IngredientsWidgetConfigActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List<Recipe>>, RecipesAdapter.RecipesOnClickHandler {
+        implements LoaderManager.LoaderCallbacks<List<Recipe>>, RecipesAdapter.OnClickRecipesHandler {
 
     protected RecipesAdapter recipesAdapter;
     private static final int RECIPES_LOADER_ID = 11;

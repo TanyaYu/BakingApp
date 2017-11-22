@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp;
+package com.example.tanyayuferova.bakingapp.ui.widgets;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
@@ -11,10 +11,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
+import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
 import com.example.tanyayuferova.bakingapp.services.GridWidgetService;
 import com.example.tanyayuferova.bakingapp.services.RecipeIntentService;
-import com.example.tanyayuferova.bakingapp.ui.RecipeActivity;
+import com.example.tanyayuferova.bakingapp.ui.activities.RecipeActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;

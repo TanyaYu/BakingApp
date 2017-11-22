@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp.ui;
+package com.example.tanyayuferova.bakingapp.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.example.tanyayuferova.bakingapp.databinding.FragmentRecipeMasterBinding;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
+import com.example.tanyayuferova.bakingapp.ui.adapters.StepsAdapter;
+import com.example.tanyayuferova.bakingapp.ui.adapters.IngredientsAdapter;
 
 /**
  * Created by Tanya Yuferova on 11/13/2017.

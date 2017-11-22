@@ -7,7 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
-import com.example.tanyayuferova.bakingapp.ui.MainActivity;
+import com.example.tanyayuferova.bakingapp.ui.activities.MainActivity;
 
 import org.hamcrest.Matcher;
 import org.junit.Rule;

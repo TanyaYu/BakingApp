@@ -6,9 +6,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.tanyayuferova.bakingapp.IngredientsWidget;
+import com.example.tanyayuferova.bakingapp.ui.widgets.IngredientsWidget;
 import com.example.tanyayuferova.bakingapp.R;
-import com.example.tanyayuferova.bakingapp.RecipeWidget;
+import com.example.tanyayuferova.bakingapp.ui.widgets.RecipeWidget;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
 import com.example.tanyayuferova.bakingapp.utils.JsonUtils;
 

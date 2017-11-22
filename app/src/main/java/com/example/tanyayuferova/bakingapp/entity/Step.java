@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.utils.NetworkUtils;
@@ -72,13 +73,13 @@ public class Step implements Parcelable, Comparable<Step> {
     }
 
     public String getVideoResource() {
-        if(getVideoURL() != null && !getVideoURL().isEmpty() && NetworkUtils.isVideoFile(getVideoURL()))
+        if(TextUtils.isEmpty(getVideoURL()) && NetworkUtils.isVideoFile(getVideoURL()))
             return getVideoURL();
         return null;
     }
 
     public String getImageResource() {
-        if(getThumbnailURL() != null && !getThumbnailURL().isEmpty() && NetworkUtils.isImageFile(getThumbnailURL()))
+        if(TextUtils.isEmpty(getThumbnailURL()) && NetworkUtils.isImageFile(getThumbnailURL()))
             return getThumbnailURL();
         return null;
     }

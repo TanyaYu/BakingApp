@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp.ui;
+package com.example.tanyayuferova.bakingapp.ui.fragments;
 
 import android.app.Dialog;
 import android.content.BroadcastReceiver;

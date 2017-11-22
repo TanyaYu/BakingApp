@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="handler" type="com.example.tanyayuferova.bakingapp.ui.RecipeActivity"/>
+        <variable name="handler" type="com.example.tanyayuferova.bakingapp.ui.activities.RecipeActivity"/>
         <variable name="step" type="com.example.tanyayuferova.bakingapp.entity.Step" />
     </data>
 

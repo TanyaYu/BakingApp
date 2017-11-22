@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.bakingapp.ui;
+package com.example.tanyayuferova.bakingapp.ui.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.example.tanyayuferova.bakingapp.databinding.IngredientItemBinding;
 import com.example.tanyayuferova.bakingapp.entity.Ingredient;
+import com.example.tanyayuferova.bakingapp.ui.activities.RecipeActivity;
 
 import java.util.List;
 

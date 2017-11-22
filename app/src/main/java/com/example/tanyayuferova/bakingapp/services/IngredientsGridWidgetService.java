@@ -9,7 +9,7 @@ import android.widget.RemoteViewsService;
 import com.example.tanyayuferova.bakingapp.R;
 import com.example.tanyayuferova.bakingapp.entity.Ingredient;
 import com.example.tanyayuferova.bakingapp.entity.Recipe;
-import com.example.tanyayuferova.bakingapp.ui.RecipeActivity;
+import com.example.tanyayuferova.bakingapp.ui.activities.RecipeActivity;
 import com.example.tanyayuferova.bakingapp.utils.JsonUtils;
 
 import java.text.DecimalFormat;
