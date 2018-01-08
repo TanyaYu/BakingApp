@@ -17,8 +17,8 @@
 
     <ImageView
         android:id="@+id/iv_measure"
-        android:layout_width="20sp"
-        android:layout_height="20sp"
+        android:layout_width="@dimen/ingredient_item_measure_icon_size"
+        android:layout_height="@dimen/ingredient_item_measure_icon_size"
         android:layout_gravity="center_vertical"
         tools:src="@drawable/ic_measure_cup" />
 

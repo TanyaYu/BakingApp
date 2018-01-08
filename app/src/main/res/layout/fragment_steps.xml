@@ -13,8 +13,8 @@
         <TextView
             android:id="@+id/tv_step_description"
             android:text="@{step.description}"
-            android:textSize="16sp"
-            android:padding="5dp"
+            android:textSize="@dimen/fragment_steps_description_text_size"
+            android:padding="@dimen/fragment_steps_description_padding"
             tools:text="4. Beat together the nutella, mascarpone, 1 teaspoon of salt, and 1 tablespoon of vanilla on medium speed in a stand mixer or high speed with a hand mixer until fluffy."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

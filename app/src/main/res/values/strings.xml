@@ -22,4 +22,5 @@
 
     <string name="ingredients_widget_label">Ingredients</string>
     <string name="recipes_widget_label">Recipes</string>
+    <string name="recipe_image">Recipe image</string>
 </resources>

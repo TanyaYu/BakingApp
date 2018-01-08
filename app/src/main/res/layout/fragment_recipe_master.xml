@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="recipe" type="com.example.tanyayuferova.bakingapp.entity.Recipe" />
@@ -30,10 +31,10 @@
                     android:layout_height="wrap_content" />
 
                 <ImageView
-                    android:src="@drawable/ic_serving"
+                    app:srcCompat="@drawable/ic_serving"
                     android:layout_gravity="center_vertical"
-                    android:layout_width="20sp"
-                    android:layout_height="20sp" />
+                    android:layout_width="@dimen/fragment_recipe_master_servings_icon_size"
+                    android:layout_height="@dimen/fragment_recipe_master_servings_icon_size" />
 
                 <TextView
                     android:id="@+id/tv_recipe_servings"
@@ -41,7 +42,7 @@
                     tools:text="8 servings"
                     android:textStyle="italic"
                     android:textColor="@color/colorPrimaryDark"
-                    android:padding="5dp"
+                    android:padding="@dimen/fragment_recipe_master_servings_padding"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

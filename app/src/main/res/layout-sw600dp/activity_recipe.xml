@@ -12,7 +12,7 @@
 
         <FrameLayout
             android:id="@+id/master_list_fragment"
-            android:layout_width="300dp"
+            android:layout_width="@dimen/activity_recipe_master_view_width"
             android:layout_height="match_parent" />
 
         <FrameLayout

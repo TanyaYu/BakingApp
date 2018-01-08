@@ -53,10 +53,11 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:src="@drawable/ic_move_back"
+            app:srcCompat="@drawable/ic_move_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:padding="5dp"
+            android:padding="@dimen/fragment_recipe_step_navigation_icon_padding"
+            android:contentDescription="@string/move_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -72,10 +73,11 @@
 
         <ImageView
             android:id="@+id/iv_next"
-            android:src="@drawable/ic_move_to_next"
+            android:contentDescription="@string/move_next"
+            app:srcCompat="@drawable/ic_move_to_next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:padding="5dp"
+            android:padding="@dimen/fragment_recipe_step_navigation_icon_padding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

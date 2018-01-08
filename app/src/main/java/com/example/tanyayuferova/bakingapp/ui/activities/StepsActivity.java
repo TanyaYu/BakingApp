@@ -10,7 +10,8 @@ import com.example.tanyayuferova.bakingapp.ui.fragments.RecipeStepFragment;
 
 import java.util.List;
 
-public class StepsActivity extends AppCompatActivity implements RecipeStepFragment.OnPageSelectedCallBack {
+public class StepsActivity extends AppCompatActivity
+        implements RecipeStepFragment.OnPageSelectedCallBack {
 
     public static final String STEPS_EXTRA = "extra.steps";
     public static final String STEP_START_INDEX_EXTRA = "extra.step_item";

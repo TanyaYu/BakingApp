@@ -13,28 +13,28 @@
     </style>
 
     <style name="RecipeSectionTitle">
-        <item name="android:textSize">24sp</item>
-        <item name="android:padding">5dp</item>
+        <item name="android:textSize">@dimen/recipe_section_title_text_size</item>
+        <item name="android:padding">@dimen/recipe_section_title_padding</item>
     </style>
 
     <style name="StepNumberTextView">
-        <item name="android:textSize">24sp</item>
-        <item name="android:layout_width">40sp</item>
+        <item name="android:textSize">@dimen/step_number_text_size</item>
+        <item name="android:layout_width">@dimen/step_number_width</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:textAlignment">center</item>
     </style>
 
     <style name="StepDescriptionTextView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/step_description_text_size</item>
         <item name="android:background">@drawable/step_item_background_rectangle</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:padding">@dimen/step_description_padding</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="IngredientDescriptionTextView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/ingredient_description_text_size</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:padding">5dp</item>
+        <item name="android:padding">@dimen/ingredient_description_padding</item>
     </style>
 
     <style name="NavigationTextView">

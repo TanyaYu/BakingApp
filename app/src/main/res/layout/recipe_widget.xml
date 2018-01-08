@@ -9,7 +9,8 @@
     <ImageView
         android:id="@+id/iv_recipe_preview"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="@dimen/recipe_widget_preview_height"
+        android:contentDescription="@string/recipe_image"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         tools:src="@drawable/ic_cupcake_back" />
@@ -17,7 +18,7 @@
     <TextView
         android:id="@+id/tv_recipe_name"
         android:background="@color/colorPrimaryTransparent"
-        android:padding="5dp"
+        android:padding="@dimen/recipe_widget_name_padding"
         android:layout_alignBottom="@id/iv_recipe_preview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

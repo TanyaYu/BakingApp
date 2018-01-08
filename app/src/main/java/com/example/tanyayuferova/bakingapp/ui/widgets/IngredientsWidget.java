@@ -12,6 +12,9 @@ import com.example.tanyayuferova.bakingapp.services.IngredientsGridWidgetService
 import com.example.tanyayuferova.bakingapp.services.RecipeIntentService;
 import com.example.tanyayuferova.bakingapp.ui.activities.RecipeActivity;
 
+/**
+ * Ingredients widget displays ingredients list for selected recipe
+ */
 public class IngredientsWidget extends AppWidgetProvider {
 
     public static void updateIngredientsWidget(Context context, AppWidgetManager appWidgetManager,

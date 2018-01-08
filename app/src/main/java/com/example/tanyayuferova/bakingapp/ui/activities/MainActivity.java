@@ -20,7 +20,8 @@ import com.example.tanyayuferova.bakingapp.utils.JsonUtils;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Recipe>>,
+public class MainActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<List<Recipe>>,
         RecipesAdapter.OnClickRecipesHandler {
 
     private ActivityMainBinding binding;

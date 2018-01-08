@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="widget_margin">8dp</dimen>
+
+    <dimen name="fragment_recipe_master_servings_icon_size">20sp</dimen>
+    <dimen name="fragment_recipe_master_servings_padding">5dp</dimen>
+
+    <dimen name="fragment_recipe_step_navigation_icon_padding">5dp</dimen>
+
+    <dimen name="fragment_steps_description_padding">5dp</dimen>
+    <dimen name="fragment_steps_description_text_size">16sp</dimen>
+
+    <dimen name="ingredient_item_padding">5dp</dimen>
+    <dimen name="ingredient_item_measure_icon_size">20sp</dimen>
+
+    <dimen name="recipe_item_preview_height">220dp</dimen>
+    <dimen name="recipe_item_name_padding">5dp</dimen>
+
+    <dimen name="recipe_widget_preview_height">120dp</dimen>
+    <dimen name="recipe_widget_name_padding">5dp</dimen>
+
+    <dimen name="step_item_padding">3dp</dimen>
+
+    <dimen name="recipe_section_title_text_size">24sp</dimen>
+    <dimen name="recipe_section_title_padding">5dp</dimen>
+
+    <dimen name="step_number_text_size">24sp</dimen>
+    <dimen name="step_number_width">40sp</dimen>
+
+    <dimen name="step_description_text_size">16sp</dimen>
+    <dimen name="step_description_padding">12dp</dimen>
+
+    <dimen name="ingredient_description_text_size">16sp</dimen>
+    <dimen name="ingredient_description_padding">5dp</dimen>
 </resources>

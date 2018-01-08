@@ -18,7 +18,8 @@ import com.example.tanyayuferova.bakingapp.ui.fragments.RecipeStepFragment;
 
 import java.util.ArrayList;
 
-public class RecipeActivity extends AppCompatActivity implements RecipeStepFragment.OnPageSelectedCallBack {
+public class RecipeActivity extends AppCompatActivity
+        implements RecipeStepFragment.OnPageSelectedCallBack {
 
     private Snackbar measureHintBar;
     private CoordinatorLayout coordinatorLayout;

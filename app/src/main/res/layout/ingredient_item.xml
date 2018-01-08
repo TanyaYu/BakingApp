@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:padding="5dp"
+        android:padding="@dimen/ingredient_item_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -36,10 +36,11 @@
             android:src="@{ingredient.getMeasureDrawableResource(context)}"
             android:visibility="@{ingredient.getMeasureDrawableResource(context) == null ? View.GONE : View.VISIBLE}"
             android:onClick="@{() -> handler.ingredientMeasureOnClick(ingredient)}"
+            android:contentDescription="@{ingredient.getMeasureDescription(context)}"
             android:layout_gravity="center_vertical"
             tools:src="@drawable/ic_measure_cup"
-            android:layout_width="20sp"
-            android:layout_height="20sp" />
+            android:layout_width="@dimen/ingredient_item_measure_icon_size"
+            android:layout_height="@dimen/ingredient_item_measure_icon_size" />
 
         <TextView
             android:id="@+id/tv_description"

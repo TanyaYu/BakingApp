@@ -73,13 +73,13 @@ public class Step implements Parcelable, Comparable<Step> {
     }
 
     public String getVideoResource() {
-        if(TextUtils.isEmpty(getVideoURL()) && NetworkUtils.isVideoFile(getVideoURL()))
+        if(!TextUtils.isEmpty(getVideoURL()) && NetworkUtils.isVideoFile(getVideoURL()))
             return getVideoURL();
         return null;
     }
 
     public String getImageResource() {
-        if(TextUtils.isEmpty(getThumbnailURL()) && NetworkUtils.isImageFile(getThumbnailURL()))
+        if(!TextUtils.isEmpty(getThumbnailURL()) && NetworkUtils.isImageFile(getThumbnailURL()))
             return getThumbnailURL();
         return null;
     }

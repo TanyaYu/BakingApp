@@ -21,6 +21,8 @@ import com.example.tanyayuferova.bakingapp.utils.JsonUtils;
 import java.util.List;
 
 /**
+ * To set up recipe for ingredients widget
+ *
  * Created by Tanya Yuferova on 11/20/2017.
  */
 

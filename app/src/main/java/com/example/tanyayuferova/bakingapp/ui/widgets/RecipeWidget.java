@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 
 /**
- * Implementation of App Widget functionality.
+ * Recipe widget displays list of recipes
  */
 public class RecipeWidget extends AppWidgetProvider {
 
